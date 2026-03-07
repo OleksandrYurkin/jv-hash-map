@@ -5,7 +5,7 @@ import java.util.Objects;
 public class MyHashMap<K, V> implements MyMap<K, V> {
     private static final int DEFAULT_CAPACITY = 16;
     private static final double DEFAULT_LOAD_FACTOR = 0.75;
-    private static final int FOR_GETTING_INDEX = 0x7fffffff;
+    private static final int POSITIVE_MASK = Integer.MAX_VALUE;
     private Node<K, V>[] table = new Node[DEFAULT_CAPACITY];
     private final int lengthExtension = table.length * 2;
 
@@ -82,7 +82,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
     }
 
     private int getIndex(K key, int capacity) {
-        return (Objects.hashCode(key) & FOR_GETTING_INDEX) % capacity;
+        return (Objects.hashCode(key) & POSITIVE_MASK) % capacity;
     }
 
     private static class Node<K, V> {
