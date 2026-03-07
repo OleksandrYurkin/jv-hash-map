@@ -7,7 +7,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
     private static final double DEFAULT_LOAD_FACTOR = 0.75;
     private static final int POSITIVE_MASK = Integer.MAX_VALUE;
     private Node<K, V>[] table = new Node[DEFAULT_CAPACITY];
-    private final int lengthExtension = table.length * 2;
+    private final int lengthExtensions = table.length * 2;
 
     private int size = 0;
 
@@ -62,7 +62,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
     }
 
     private void resize() {
-        int newCapacity = lengthExtension;
+        int newCapacity = lengthExtensions;
         Node<K, V>[] newTable = new Node[newCapacity];
 
         for (int i = 0; i < table.length; i++) {
