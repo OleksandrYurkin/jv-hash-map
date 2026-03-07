@@ -5,8 +5,10 @@ import java.util.Objects;
 public class MyHashMap<K, V> implements MyMap<K, V> {
     private static final int DEFAULT_CAPACITY = 16;
     private static final double DEFAULT_LOAD_FACTOR = 0.75;
-
+    private static final int FOR_GETTING_INDEX = 0x7fffffff;
     private Node<K, V>[] table = new Node[DEFAULT_CAPACITY];
+    private final int lengthExtension = table.length * 2;
+
     private int size = 0;
 
     @Override
@@ -60,7 +62,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
     }
 
     private void resize() {
-        int newCapacity = table.length * 2;
+        int newCapacity = lengthExtension;
         Node<K, V>[] newTable = new Node[newCapacity];
 
         for (int i = 0; i < table.length; i++) {
@@ -80,7 +82,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
     }
 
     private int getIndex(K key, int capacity) {
-        return (Objects.hashCode(key) & 0x7fffffff) % capacity;
+        return (Objects.hashCode(key) & FOR_GETTING_INDEX) % capacity;
     }
 
     private static class Node<K, V> {
