@@ -6,9 +6,9 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
     private static final int DEFAULT_CAPACITY = 16;
     private static final double DEFAULT_LOAD_FACTOR = 0.75;
     private static final int POSITIVE_MASK = Integer.MAX_VALUE;
-    private Node<K, V>[] table = new Node[DEFAULT_CAPACITY];
-    private final int lengthExtensions = table.length * 2;
+    private static final int RESIZE_MULTIPLIER = 2;
 
+    private Node<K, V>[] table = new Node[DEFAULT_CAPACITY];
     private int size = 0;
 
     @Override
@@ -53,6 +53,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
             }
             currentNode = currentNode.next;
         }
+
         return null;
     }
 
@@ -62,7 +63,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
     }
 
     private void resize() {
-        int newCapacity = lengthExtensions;
+        int newCapacity = table.length * RESIZE_MULTIPLIER;
         Node<K, V>[] newTable = new Node[newCapacity];
 
         for (int i = 0; i < table.length; i++) {
@@ -90,7 +91,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         private V value;
         private Node<K, V> next;
 
-        public Node(K key, V value) {
+        private Node(K key, V value) {
             this.key = key;
             this.value = value;
         }
